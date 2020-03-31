@@ -16,7 +16,8 @@
   ],
   "activationEvents": [
     "onLanguage:epl",
-    "onDebug"
+    "onDebug",
+    "onView:apamaProjects"
   ],
   "main": "./out/extension.js",
   "contributes": {
