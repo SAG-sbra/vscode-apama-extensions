@@ -27,6 +27,11 @@
           "type": "string",
           "default": "c:\\softwareag\\apama",
           "description": "Home directory for the Apama installation."
+        },
+        "softwareag.apama.debugport": {
+          "type": "integer",
+          "default": "15903",
+          "description": "Default port for correlator debugging."
         }
       }
     },
@@ -110,10 +115,27 @@
           "light": "resources/closeall.svg",
           "dark": "resources/closeall_inverse.svg"
         }
+      },
+      {
+        "command": "extension.apama.engine_inject",
+        "title": "engine inject"
+      },
+      {
+        "command": "extension.apama.engine_send",
+        "title": "engine send"
       }
     ],
     "menus": {
-      "explorer/context": [],
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .mon",
+          "command": "extension.apama.engine_inject"
+        },
+          {
+          "when": "resourceExtname == .evt",
+          "command": "extension.apama.engine_send"
+        }
+      ],
       "view/title": [
         {
           "when": "view == apamaProjects",
@@ -142,7 +164,7 @@
           "command": "extension.apamaProjects.apamaToolRemoveBundle",
           "group": "inline"
         }
-      ]    
+      ]
     },
     "views": {
       "explorer": [
