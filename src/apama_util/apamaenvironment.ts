@@ -21,6 +21,8 @@ const default_linux_env: string = 'apama_env';
 const default_windows_env: string = 'apama_env.bat';
 const default_linux_send: string = 'engine_send';
 const default_windows_send: string = 'engine_send.exe';
+const default_linux_delete:string = 'engine_delete';
+const default_windows_delete:string = 'engine_delete.exe';
 const default_linux_source: string = '. ';
 const default_windows_source: string = '';
 
@@ -43,6 +45,7 @@ export class ApamaEnvironment {
   private cmd_management: string;
   private cmd_eplbuddy: string;
   private cmd_send: string;
+  private cmd_delete: string;
 
   constructor( private logger:OutputChannel ) { 
     this.workspaceConfig = workspace.getConfiguration(confignode);
@@ -60,6 +63,7 @@ export class ApamaEnvironment {
       this.cmd_management = '';
       this.cmd_eplbuddy = '';
       this.cmd_send = '';
+      this.cmd_delete = '';
       this.updateCommands();
   }
 
@@ -88,6 +92,7 @@ export class ApamaEnvironment {
       this.cmd_management = join(this.apamaHome, 'bin', default_linux_management);
       this.cmd_eplbuddy = join(this.apamaHome, 'bin', default_linux_eplbuddy);
       this.cmd_send = join(this.apamaHome, 'bin', default_linux_send);
+      this.cmd_delete = join(this.apamaHome, 'bin', default_linux_delete);
     }
     else {
       this.cmd_source = default_windows_source;
@@ -99,6 +104,7 @@ export class ApamaEnvironment {
       this.cmd_management = join(this.apamaHome, 'bin', default_windows_management);
       this.cmd_eplbuddy = join(this.apamaHome, 'bin', default_windows_eplbuddy);
       this.cmd_send = join(this.apamaHome, 'bin', default_windows_send);
+      this.cmd_delete = join(this.apamaHome, 'bin', default_windows_delete);
     }
 
 
@@ -137,6 +143,13 @@ export class ApamaEnvironment {
     this.logger.appendLine('startSend ' + r);
     return r;
 
+  }
+
+  getDeleteCmdLine(): string {
+    this.updateCommands();
+    let r = this.sourceEnv() + ' && ' + this.cmd_delete + ' '; 
+    this.logger.appendLine('startDelete ' + r);
+    return r;
   }
 
   getApamaProjectCmdline(): string {
