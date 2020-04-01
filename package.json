@@ -137,10 +137,6 @@
           "command": "extension.apama.engine_inject"
         },
         {
-          "when": "resourceExtname == .mon",
-          "command": "extension.apama.engine_delete"
-        },
-        {
           "when": "resourceExtname == .evt",
           "command": "extension.apama.engine_send"
         }
