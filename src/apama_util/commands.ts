@@ -37,7 +37,7 @@ export class ApamaCommandProvider{
                 vscode.commands.registerCommand('extension.apama.engine_send', async(evtFile?) => {
                     // From explorer/context menu 
                     if(evtFile !== undefined){
-                        // Specify engine_send command with evt files 
+                        // Specify engine_send command WITH evt file 
                        this.sendCmd.run('.',['-p', port.toString()].concat(evtFile.fsPath)) 
                     }
                     // Calling engine send from command palette
@@ -48,7 +48,7 @@ export class ApamaCommandProvider{
 						    placeHolder: "Specify event to send"
                         });
 						if (userInput !== undefined) {
-                            // Specify engine_send command with no evt files  
+                            // Specify engine_send command with NO evt files  
                             const child = this.sendCmdAsync.start(['-p',port.toString()], true, true);
                             // When no evt files are specified in engine_send command 
                             // the correlator reads user-specified events from stdin 
@@ -62,26 +62,13 @@ export class ApamaCommandProvider{
                 //
                 // engine_delete command
                 //
-		        vscode.commands.registerCommand('extension.apama.engine_delete', (monFile?) => {
-                    // from explorer/context menu 
-                    if(monFile !== undefined){
-                        this.deleteCmd.run('.',
-                            ['-p', port.toString()]
-                            .concat('-v')//-v option confirms deletion by print statement
-                            .concat(['-f', monFile.fsPath])//TODO get working!
-                        ); 
-                    }
-                    // from command line 
-                    else{
-                        //display prompt.
-					    vscode.window.showInputBox({
-					        value: "",
-                            placeHolder: "Specify the names of zero or more EPL, JMon, monitors and/or event types to delete from correlator."
-                        }).then(names => {
-                            this.deleteCmd.run('.',['-p', port.toString()]
-                            .concat('-v')//-v option confims deletion by print statement
-                            .concat(names)); //TODO finish this here!!
-                        }); 
+		        vscode.commands.registerCommand('extension.apama.engine_delete', async() => {
+                    const userInput = await vscode.window.showInputBox({
+                        value: "",
+                        placeHolder: "Specify the names of zero or more EPL, JMon, monitors and/or event types to delete from correlator."
+                    });
+                    if(userInput !== undefined){
+                        this.deleteCmd.run('.', ['-p',port.toString()].concat(userInput));
                     }
                 })  
                 ]
