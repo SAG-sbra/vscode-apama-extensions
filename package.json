@@ -119,11 +119,15 @@
       },
       {
         "command": "extension.apama.engine_inject",
-        "title": "engine inject"
+        "title": "correlator: engine inject"
       },
       {
         "command": "extension.apama.engine_send",
-        "title": "engine send"
+        "title": "correlator: engine send"
+      },
+      {
+        "command": "extension.apama.engine_delete",
+        "title": "correlator: engine delete"
       }
     ],
     "menus": {
@@ -132,7 +136,11 @@
           "when": "resourceExtname == .mon",
           "command": "extension.apama.engine_inject"
         },
-          {
+        {
+          "when": "resourceExtname == .mon",
+          "command": "extension.apama.engine_delete"
+        },
+        {
           "when": "resourceExtname == .evt",
           "command": "extension.apama.engine_send"
         }
