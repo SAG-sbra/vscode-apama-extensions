@@ -16,6 +16,12 @@ export class ApamaRunner {
     //if fails returns promise.reject including err 
     return await exec(this.command + ' ' + args.join(' '), { cwd: workingDir });
   }
+
+  public parseOutput(stdoutRes: any): any {
+    let lines = stdoutRes.stdout.split("\n")
+    lines.splice(0, 2);
+    return JSON.parse(lines.join("\n"))
+  }
 }
 
 

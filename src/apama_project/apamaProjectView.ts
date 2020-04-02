@@ -70,7 +70,7 @@ export class ApamaProjectView implements TreeDataProvider<string | ApamaTreeItem
 						.then(result => {
 							if (typeof result === "string" && workspace.rootPath !== undefined) {
 								this.apama_project.run(workspace.rootPath, ['create', result])
-									.catch((err: string) => {
+								.catch((err: string) => {
 										this.logger.appendLine(err);
 									});
 							}
